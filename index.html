@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Finit State Machine</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="State.js"></script>
+    <script src="FinitMachineFactory.js"></script>
+    <script>
+        $(document).ready(function()
+        {
+            $('#check-pattern').click(function()
+            {
+                var p1 = new FinitMachineFactory($("#start-state").val(),
+                        $("#defined-states").val(),
+                        $("#rules").val());
+                p1.generateFiniteMachine();
+                var result = p1.start($("#pattern").val());
+                $("#result").text(result);
+            });
+        });
+    </script>
+<body>
+    <form>
+        <table>
+            <tr>
+                <td>Start State:</td>
+                <td><input type="text" id="start-state" value="s1" name ="startState"/></td>
+            </tr>
+            <tr>
+<td>Define States</td><td><textarea id="defined-states" name="defined-states">s1,0
+s2,1</textarea></td>
+            </tr>
+            <tr>
+            <td>Rules</td>
+            <td>
+<textarea name="rules" id="rules">s1,a->s2
+s1,b->s1
+s2,a->s2
+s2,b->s1</textarea></td>
+            </tr>
+            <tr>
+                <td>Pattern to check</td>
+                <td><input type="text" name="pattern" id="pattern" value="aba"/></td>
+            </tr>
+            <tr>
+                <td><strong>Result:</strong></td>
+                <td><span id="result"></span></td>
+            </tr>
+            <tr>
+                <td><input type="button" id="check-pattern" value="check" name="check-pattern" /></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
