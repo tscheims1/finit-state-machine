@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Finit State Machine</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="State.js"></script>
+    <script src="FinitMachineVisualizer.js"></script>
     <script src="FinitMachineFactory.js"></script>
     <script>
         $(document).ready(function()
@@ -14,13 +16,22 @@
                 var p1 = new FinitMachineFactory($("#start-state").val(),
                         $("#defined-states").val(),
                         $("#rules").val());
-                p1.generateFiniteMachine();
+                p1.generateFinitMachine();
+                p1.visualizeFinitMachines();
+
                 var result = p1.start($("#pattern").val());
-                $("#result").text(result);
+                $("#result").text(result.result);
+                var verboseOutput ="";
+                for(var i =0; i < result.steps.length; i++)
+                {
+                    verboseOutput += result.steps[i].state+","+result.steps[i].token+" -> "+result.steps[i].nextState+"<br />";
+                }
+                $("#verbose-output").html(verboseOutput);
             });
         });
     </script>
 <body>
+    <div>
     <form>
         <table>
             <tr>
@@ -48,9 +59,17 @@ s2,b->s1</textarea></td>
                 <td><span id="result"></span></td>
             </tr>
             <tr>
+                <td><strong>Verbose Output</strong></td>
+                <td><span id="verbose-output"></span></td>
+            </tr>
+            <tr>
                 <td><input type="button" id="check-pattern" value="check" name="check-pattern" /></td>
             </tr>
         </table>
     </form>
+    </div>
+    <div id="visual-state-machines">
+
+    </div>
 </body>
 </html>
